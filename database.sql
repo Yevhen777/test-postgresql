@@ -2,6 +2,7 @@
 
 
 create TABLE articles (
+    
        id serial primary key,
        articleId varchar  UNIQUE NOT NULL,
        userId varchar  NOT NULL,

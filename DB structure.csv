@@ -54,3 +54,9 @@ create table deleted_comments (
 "        ""userId"" varchar  NOT NULL,"
 "        ""deletedDate"" bigint  NOT NULL"
         )
+
+        create table test_user (
+        articleId varchar  NOT NULL,
+        commentId varchar  UNIQUE NOT NULL,
+        commentDate bigint  NOT NULL
+        );

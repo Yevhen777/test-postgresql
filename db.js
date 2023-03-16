@@ -3,7 +3,7 @@ const Knex = require("knex");
 // const knexFile = require("./knexfile");
 // const db = knex(knexFile.development);
 const connection = {
-  ssl: { rejectUnauthorized: false },
+  // ssl: { rejectUnauthorized: false },
 
   user: "postgres",
   password: "100Mamoge",
