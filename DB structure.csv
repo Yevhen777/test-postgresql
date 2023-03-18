@@ -1,62 +1,80 @@
-create table articles (
-        id serial primary key,
-"        ""articleId"" varchar  UNIQUE NOT NULL,"
-"        ""userId"" varchar  NOT NULL,"
-"        ""vehicleId"" varchar  NOT NULL,"
-"        ""publicationDate"" bigint  NOT NULL,"
-"        ""brandId"" varchar  NOT NULL,"
-"        ""modelId"" varchar  NOT NULL,"
-"        ""generationId"" varchar  NOT NULL,"
-"        ""likes"" integer  NOT NULL,"
-"        ""comments"" integer  NOT NULL,"
-"        ""engine"" integer,"
-"        ""wheeldrive"" integer,"
-"        ""transmission"" integer,"
-"        ""about"" integer[]        "
-        )
+        create table articles (
+                id serial primary key,
+        "        ""articleId"" varchar  UNIQUE NOT NULL,"
+        "        ""userId"" varchar  NOT NULL,"
+        "        ""vehicleId"" varchar  NOT NULL,"
+        "        ""publicationDate"" bigint  NOT NULL,"
+        "        ""brandId"" varchar  NOT NULL,"
+        "        ""modelId"" varchar  NOT NULL,"
+        "        ""generationId"" varchar  NOT NULL,"
+        "        ""likes"" integer  NOT NULL,"
+        "        ""comments"" integer  NOT NULL,"
+        "        ""engine"" integer,"
+        "        ""wheeldrive"" integer,"
+        "        ""transmission"" integer,"
+        "        ""about"" integer[]        "
+                )
+                
+                
+                create table articles  (
+                id serial primary key,
+                articleid varchar  UNIQUE NOT NULL,
+                userid varchar  NOT NULL,
+                vehicleid varchar  NOT NULL,
+                publicationiate bigint  NOT NULL,
+                brandid varchar  NOT NULL,
+                modelid varchar  NOT NULL,
+                generationid varchar  NOT NULL,
+                likes integer  NOT NULL,
+                comments integer  NOT NULL,
+                engine integer,
+                wheeldrive  integer,
+                transmission  integer,
+                about integer[]       
+                )
 
-create table deleted_articles (
-        id serial primary key,
-"        ""articleId"" varchar  UNIQUE NOT NULL,"
-"        ""userId"" varchar  NOT NULL,"
-"        ""vehicleId"" varchar  NOT NULL,"
-"        ""publicationDate"" bigint  NOT NULL,"
-"        ""brandId"" varchar  NOT NULL,"
-"        ""modelId"" varchar  NOT NULL,"
-"        ""generationId"" varchar  NOT NULL,"
-"        ""likes"" integer  NOT NULL,"
-"        ""comments"" integer  NOT NULL,"
-"        ""engine"" integer,"
-"        ""wheeldrive"" integer,"
-"        ""transmission"" integer,"
-"        ""about"" integer[],"
-"        ""deletedDate"" bigint  NOT NULL"
-        )
+        create table deleted_articles (
+                id serial primary key,
+        "        ""articleId"" varchar  UNIQUE NOT NULL,"
+        "        ""userId"" varchar  NOT NULL,"
+        "        ""vehicleId"" varchar  NOT NULL,"
+        "        ""publicationDate"" bigint  NOT NULL,"
+        "        ""brandId"" varchar  NOT NULL,"
+        "        ""modelId"" varchar  NOT NULL,"
+        "        ""generationId"" varchar  NOT NULL,"
+        "        ""likes"" integer  NOT NULL,"
+        "        ""comments"" integer  NOT NULL,"
+        "        ""engine"" integer,"
+        "        ""wheeldrive"" integer,"
+        "        ""transmission"" integer,"
+        "        ""about"" integer[],"
+        "        ""deletedDate"" bigint  NOT NULL"
+                )
 
 
-create table comments (
-        id serial primary key,
-"        ""articleId"" varchar  NOT NULL,"
-"        ""commentId"" varchar  UNIQUE NOT NULL,"
-"        ""commentDate"" bigint  NOT NULL,"
-"        ""likes"" integer  NOT NULL,"
-"        ""answers"" integer  NOT NULL,"
-"        ""userId"" varchar  NOT NULL"
-        )
+        create table comments (
+                id serial primary key,
+        "        ""articleId"" varchar  NOT NULL,"
+        "        ""commentId"" varchar  UNIQUE NOT NULL,"
+        "        ""commentDate"" bigint  NOT NULL,"
+        "        ""likes"" integer  NOT NULL,"
+        "        ""answers"" integer  NOT NULL,"
+        "        ""userId"" varchar  NOT NULL"
+                )
 
-create table deleted_comments (
-        id serial primary key,
-"        ""articleId"" varchar  NOT NULL,"
-"        ""commentId"" varchar  UNIQUE NOT NULL,"
-"        ""commentDate"" bigint  NOT NULL,"
-"        ""likes"" integer  NOT NULL,"
-"        ""answers"" integer  NOT NULL,"
-"        ""userId"" varchar  NOT NULL,"
-"        ""deletedDate"" bigint  NOT NULL"
-        )
+        create table deleted_comments (
+                id serial primary key,
+        "        ""articleId"" varchar  NOT NULL,"
+        "        ""commentId"" varchar  UNIQUE NOT NULL,"
+        "        ""commentDate"" bigint  NOT NULL,"
+        "        ""likes"" integer  NOT NULL,"
+        "        ""answers"" integer  NOT NULL,"
+        "        ""userId"" varchar  NOT NULL,"
+        "        ""deletedDate"" bigint  NOT NULL"
+                )
 
-        create table test_user (
-        articleId varchar  NOT NULL,
-        commentId varchar  UNIQUE NOT NULL,
-        commentDate bigint  NOT NULL
-        );
+                create table test_user (
+                articleId varchar  NOT NULL,
+                commentId varchar  UNIQUE NOT NULL,
+                commentDate bigint  NOT NULL
+                );

@@ -19,6 +19,8 @@ create TABLE articles (
        about integer[]        
     );
 
+    
+
         create TABLE deleted_articles (
         id serial primary key,
         articleId varchar  UNIQUE NOT NULL,
