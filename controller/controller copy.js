@@ -6,84 +6,86 @@ const path = require("path");
 const dataPath = path.join(__dirname, "../convertCopy.json");
 const data = JSON.parse(fs.readFileSync(dataPath));
 
-// const articles = data.map((el) => {
-//   const { id, ...rest } = el;
-//   // delete el.id;
-//   return rest;
-// });
-
 class ArticleController {
   async createArticle(req, res) {
     try {
-      // console.log("Create article response", articles.length, articles[1]);
-      Promise.all(
-        data.map((el) => {
-          const { id, ...rest } = el;
-          console.log(rest);
-          // delete el.id;
-          const insertData = {
-            ...rest,
-            engine: rest.engine === "" ? null : Number(rest.engine),
-            wheeldrive: rest.wheeldrive === "" ? null : Number(rest.wheeldrive),
-            transmission:
-              rest.transmission === "" ? null : Number(rest.transmission),
-          };
-          return knex("articles").insert(insertData);
-        })
-      )
-        .then(() => {
-          console.log("All articles inserted successfully");
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-      // data.map((el) => {
-      //   const { id, ...rest } = el;
-      //   console.log(rest);
-      //   // delete el.id;
-      //   knex("articles").insert(rest);
-      // });
+      await knex.schema.createTable("articles", function (table) {
+        table.increments("id").primary();
+        table.string("articleId").unique().notNullable();
+        table.string("userId").notNullable();
+        table.string("vehicleId").notNullable();
+        table.bigInteger("publicationDate").notNullable();
+        table.string("brandId").notNullable();
+        table.string("modelId").notNullable();
+        table.string("generationId").notNullable();
+        table.integer("likes").notNullable();
+        table.integer("comments").notNullable();
+        table.integer("engine");
+        table.integer("wheeldrive");
+        table.integer("transmission");
+        table.specificType("about", "integer[]");
+      });
+      const insertData = data.map((el) => {
+        const { id, ...rest } = el;
+        return {
+          ...rest,
+          engine: rest.engine === "" ? null : Number(rest.engine),
+          wheeldrive: rest.wheeldrive === "" ? null : Number(rest.wheeldrive),
+          transmission:
+            rest.transmission === "" ? null : Number(rest.transmission),
+        };
+      });
 
-      // await knex.schema.createTable("articles", function (table) {
-      //   table.increments("id").primary();
-      //   table.string("articleId").unique().notNullable();
-      //   table.string("userId").notNullable();
-      //   table.string("vehicleId").notNullable();
-      //   table.bigInteger("publicationDate").notNullable();
-      //   table.string("brandId").notNullable();
-      //   table.string("modelId").notNullable();
-      //   table.string("generationId").notNullable();
-      //   table.integer("likes").notNullable();
-      //   table.integer("comments").notNullable();
-      //   table.integer("engine");
-      //   table.integer("wheeldrive");
-      //   table.integer("transmission");
-      //   table.specificType("about", "integer[]");
-      // });
+      await knex("articles").insert(insertData);
 
-      // await knex.schema.createTable("new_test", function (table) {
-      //   table.increments("id");
-      //   table.string("articleId").notNullable();
-      //   table.string("userId").notNullable();
-      //   table.string("vehicleId").notNullable();
-      //   table.decimal("publicationDate").notNullable();
-      //   table.string("brandId").notNullable();
-      //   table.string("modelId").notNullable();
-      //   table.string("generationId").notNullable();
-      //   table.decimal("likes").notNullable();
-      //   table.decimal("comments").notNullable();
-      //   table.decimal("engine");
-      //   table.decimal("wheeldrive");
-      //   table.decimal("transmission");
-      //   table.decimal("about");
-      // });
       res.json("ок");
     } catch (err) {
       console.log(err);
     }
   }
 
-  async deleterAticle(req, res) {}
+  async getAutoByQuery(req, res) {
+    try {
+      const { carId } = req.params;
+      const { sort, engine, transmission, wheeldrive, about } = req.query;
+      console.log(sort, carId, engine, transmission, wheeldrive, about);
+      const query = await knex("articles").where({ generationId: carId });
+      console.log(query.length);
+      if (sort === "date") {
+        query.orderBy("date");
+      } else if (sort === "comments") {
+        query.orderBy("comments");
+      } else if (sort === "likes") {
+        query.orderBy("likes");
+      }
+
+      if (engine >= 0 && engine <= 4) {
+        query.andWhere({ engine });
+      }
+
+      if (transmission >= 0 && transmission <= 4) {
+        query.andWhere({ transmission });
+      }
+
+      if (wheeldrive >= 0 && wheeldrive <= 2) {
+        query.andWhere({ wheeldrive });
+      }
+      if (about) {
+        const values = about
+          .match(/.{1,2}/g)
+          .map((value) => parseInt(value, 16));
+        query.andWhere((builder) => {
+          values.forEach((value) => {
+            builder.orWhere("about", "like", `%${value}%`);
+          });
+        });
+      }
+
+      res.json(query);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 module.exports = new ArticleController();
